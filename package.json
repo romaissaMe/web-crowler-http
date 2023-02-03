@@ -1,0 +1,25 @@
+{
+  "name": "web-crowler-http",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest --coverage"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/romaissaMe/web-crowler-http.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/romaissaMe/web-crowler-http/issues"
+  },
+  "homepage": "https://github.com/romaissaMe/web-crowler-http#readme",
+  "devDependencies": {
+    "jest": "^29.4.1"
+  },
+  "dependencies": {
+    "jsdom": "^21.1.0"
+  }
+}
