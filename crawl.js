@@ -1,5 +1,6 @@
-const {JSDOM}=require('jsdom')
-function normalizeUrl(url){
+import {JSDOM} from 'jsdom'
+import fetch from 'node-fetch'
+export function normalizeUrl(url){
     const urlObj = new URL(url);
     const newUrl= `${urlObj.hostname}${urlObj.pathname}`;
     if(newUrl.length>0 && newUrl.slice(-1)==='/'){
@@ -8,7 +9,7 @@ function normalizeUrl(url){
     return newUrl;
 }
 
-function getURLFomHTML(htmlBody,baseUrl){
+export function getURLFomHTML(htmlBody,baseUrl){
     const urls=[]
     const dom = new JSDOM(htmlBody)
     const links = dom.window.document.querySelectorAll('a')
@@ -37,6 +38,28 @@ function getURLFomHTML(htmlBody,baseUrl){
     }
     return urls
 }
+export async function crawlPage(currentUrl){
+    console.log(`currently crawling page ${currentUrl}`)
+    try{
+        const data = await fetch(currentUrl)
+        if(data.status>399){
+            console.log(`error in fetch with status code ${data.status} on page ${currentUrl}`)
+            return
+        }
+        const contentType=data.headers.get('content-type')
+        if(!contentType.includes('html/text')){
+            console.log(`error the content type is ${contentType}`)
+            return
+        }
+        console.log(await data.text())
+    }
+    catch(err){
+        console.log(`error at fetching data ${err.message}`)
+    }
+    
+    
+}
 
-module.exports= {normalizeUrl,
-    getURLFomHTML}
+export function print(){
+    console.log('for test')
+}

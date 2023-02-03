@@ -2,8 +2,10 @@
   "name": "web-crowler-http",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "main.js",
+  "type": "module",
   "scripts": {
+    "start": "node main.js",
     "test": "jest --coverage"
   },
   "repository": {
@@ -20,6 +22,7 @@
     "jest": "^29.4.1"
   },
   "dependencies": {
-    "jsdom": "^21.1.0"
+    "jsdom": "^21.1.0",
+    "node-fetch": "^3.3.0"
   }
 }

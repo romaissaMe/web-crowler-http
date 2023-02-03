@@ -1,5 +1,5 @@
-const {normalizeUrl} = require('./crawl')
-const {getURLFomHTML} = require('./crawl')
+import {normalizeUrl} from './crawl'
+import {getURLFomHTML} from './crawl'
 
 test('normalize strip http',()=>{
     const input = 'https://blog.dev/path';
