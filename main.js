@@ -12,7 +12,8 @@ function main(){
     else{
         const baseUrl=process.argv[2]
         console.log(`crawling started of ${baseUrl}`)
-        crawlPage(baseUrl)
+        const pages=  crawlPage(baseUrl,baseUrl,{})
+        console.log(pages)
     }
 }
 

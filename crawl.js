@@ -38,26 +38,45 @@ export function getURLFomHTML(htmlBody,baseUrl){
     }
     return urls
 }
-export async function crawlPage(currentUrl){
+export async function crawlPage(baseUrl,currentUrl,pages){
+    const currentUrlObj=new URL(currentUrl)
+    const baseUrlObj = new URL(baseUrl)
+    if(currentUrlObj.hostname !== baseUrlObj.hostname){
+        return pages
+    }
+    const normalizedUrl=normalizeUrl(currentUrl)
+      // if we've already visited this page
+      // just increase the count and don't repeat
+    if (pages[normalizedUrl] > 0){
+        pages[normalizedUrl]++
+        return pages
+    }
+      // initialize this page in the map
+      // since it doesn't exist yet
+    pages[normalizedUrl] = 1
     console.log(`currently crawling page ${currentUrl}`)
+    let htmlBody=``
     try{
         const data = await fetch(currentUrl)
         if(data.status>399){
             console.log(`error in fetch with status code ${data.status} on page ${currentUrl}`)
-            return
+            return pages
         }
         const contentType=data.headers.get('content-type')
         if(!contentType.includes('html/text')){
             console.log(`error the content type is ${contentType}`)
-            return
+            return pages
         }
-        console.log(await data.text())
+            htmlBody=await data.text()
     }
     catch(err){
         console.log(`error at fetching data ${err.message}`)
     }
-    
-    
+    const links = getURLFomHTML(htmlBody,baseUrl)
+        for (const link of links){
+            pages= await crawlPage(baseUrl,link,pages)
+        }
+    return pages
 }
 
 export function print(){
