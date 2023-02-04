@@ -1,4 +1,5 @@
 import {crawlPage,print} from './crawl.js'
+import { printReport } from './rapport.js'
 function main(){
     print()
     if(process.argv.length<3){
@@ -13,7 +14,7 @@ function main(){
         const baseUrl=process.argv[2]
         console.log(`crawling started of ${baseUrl}`)
         const pages=  crawlPage(baseUrl,baseUrl,{})
-        console.log(pages)
+        printReport(pages)
     }
 }
 
